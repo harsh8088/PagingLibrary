@@ -8,9 +8,11 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.hrawat.paginglibrary.db.AppDatabase;
 import com.hrawat.paginglibrary.db.DatabaseCreator;
@@ -30,6 +32,7 @@ public class ListActivity extends AppCompatActivity {
                 AppDatabase.class,
                 AppDatabase.DATABASE_NAME).build();
         userDao = appDatabase.userDao();
+        SearchView searchView = (SearchView) findViewById(R.id.searchView);
         RecyclerView recyclerView = findViewById(R.id.userList);
         LinearLayoutManager llm = new LinearLayoutManager(this);
         llm.setOrientation(LinearLayoutManager.VERTICAL);
@@ -39,6 +42,35 @@ public class ListActivity extends AppCompatActivity {
         final UserAdapter userUserAdapter = new UserAdapter();
         viewModel.userList.observe(this, pagedList -> userUserAdapter.setList(pagedList));
         recyclerView.setAdapter(userUserAdapter);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @SuppressLint("StaticFieldLeak")
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                new AsyncTask<Void, Void, User>() {
+                    @Override
+                    protected User doInBackground(Void... voids) {
+                        return appDatabase.userDao().findByName(query);
+                    }
+
+                    @Override
+                    protected void onPostExecute(User user) {
+                        if (user != null && user.firstName != null)
+                            Toast.makeText(ListActivity.this, "found name " +
+                                    user.firstName + "at value : " + user.userId, Toast.LENGTH_SHORT).show();
+                        else
+                            Toast.makeText(ListActivity.this, user.firstName +
+                                    " not found", Toast.LENGTH_SHORT).show();
+                        super.onPostExecute(user);
+                    }
+                }.execute();
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
     }
 
     @Override
