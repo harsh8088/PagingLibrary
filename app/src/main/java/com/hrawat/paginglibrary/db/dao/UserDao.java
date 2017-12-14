@@ -33,6 +33,9 @@ public interface UserDao {
     @Query("SELECT * FROM User")
     public abstract LivePagedListProvider<Integer, User> usersByFirstName();
 
-    @Query("SELECT * FROM user WHERE first_name LIKE :first LIMIT 1")
-    User findByName(String first);
+    @Query("SELECT * FROM user WHERE first_name LIKE :first ")
+    List<User> findByName(String first);
+
+    @Query("SELECT * FROM user WHERE user_id LIKE :userId ")
+    User findByUserId(long userId);
 }

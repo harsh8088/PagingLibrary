@@ -8,17 +8,17 @@ import java.util.Random;
 
 public class DatabaseCreator {
 
-    private String[] firstName = new String[]{"Noah", "Emma", "Liam", "Olivia", "William", "Ava", "Mason", "Sophia", "James",
-            "Isabella", "Benjamin", "Mia", "Jacob", "Charlotte", "Michael", "Abigail", "Elijah", "Emily", "Ethan", "Harper"};
+    private String[] firstName = new String[]{"Noah", "Emma", "Liam", "Olivia", "William", "Ava", "John", "Sophia", "James",
+            "Isabella", "Suresh", "Mia", "Jacob", "Shaheem", "Charlotte", "Michael", "Abigail", "Elijah", "Emily", "Mahesh", "Harper", "Harsh"};
     private String[] street = new String[]{
-            "High Street", "Station Road", "Main Street", "Park Road", "Church Road", "Church Street", "London Road", "Victoria Road", "Green Lane",
-            "The Avenue", "The Crescent", "Queens Road", "New Road", "Grange Road", "Kings Road", "Kingsway", "Windsor Road", "Highfield Road", "Mill Lane",
-            "Alexander Road", "York Road", "St. John’s Road", "Manor Road", "Church Lane", "Park Avenue"};
+            "High Street", "Station Road", "Badi Mukhani", "Main Street", "Park Road", "Church Road", "Church Street", "London Road", "Victoria Road", "Green Lane",
+            "The Avenue", "Railway Bazaar", "Queens Road", "New Road", "Grange Road", "Kings Road", "Kingsway", "Windsor Road", "Highfield Road", "Mill Lane",
+            "Alexander Road", "York Road", "St. John’s Road", "Choti Mukhani", "Church Lane", "Park Avenue", "Pilikothi"};
     private String[] city = new String[]{
-            "Ashland", "Aspen", "Atascadero", "Athens", "Atlanta", "Auburn", "Austin", "Ayer", "Babylon", "Bainbridge"
+            "Ashland", "Aspen", "Atascadero", "Kathgodam", "Athens", "Atlanta", "Auburn", "Austin", "Ayer", "Babylon", "Bainbridge", "Haldwani", "Naintal"
     };
     private String[] state = new String[]{
-            "New Hampshire", "New Jersey", "New Mexico", "New York"};
+            "New Hampshire", "UK", "New Jersey", "New Mexico", "New York", "Uttrakhand", "Himanchal Pradesh"};
 
     public List<User> getRandomUserList() {
         List<User> users = new ArrayList<>();
