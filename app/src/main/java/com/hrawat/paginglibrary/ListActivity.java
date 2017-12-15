@@ -47,11 +47,11 @@ public class ListActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(llm);
         UserViewModel viewModel = ViewModelProviders.of(this).get(UserViewModel.class);
         viewModel.init(userDao);
-        final UserAdapter userUserAdapter = new UserAdapter();
-        viewModel.userList.observe(this, pagedList -> userUserAdapter.setList(pagedList));
+        final UserAdapter userAdapter = new UserAdapter();
+        viewModel.userList.observe(this, pagedList -> userAdapter.setList(pagedList));
         RecyclerView.ItemDecoration dividerItemDecoration = new DividerItemDecoration(this,DividerItemDecoration.VERTICAL);
         recyclerView.addItemDecoration(dividerItemDecoration);
-        recyclerView.setAdapter(userUserAdapter);
+        recyclerView.setAdapter(userAdapter);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @SuppressLint("StaticFieldLeak")
             @Override
@@ -59,14 +59,16 @@ public class ListActivity extends AppCompatActivity {
                 new AsyncTask<Void, Void, List<User>>() {
                     @Override
                     protected List<User> doInBackground(Void... voids) {
-                        return appDatabase.userDao().findByName(query);
+                        return appDatabase.userDao().findUsers(query);
                     }
 
                     @Override
                     protected void onPostExecute(List<User> user) {
-                        if (user != null && user.size()>0)
+                        if (user != null && user.size()>0) {
+                            userAdapter.filterName(user);
                             Toast.makeText(ListActivity.this, "found name " +
-                                    user.get(0).firstName + " " + user.size()+" times", Toast.LENGTH_SHORT).show();
+                                    user.get(0).firstName + " " + user.size() + " times", Toast.LENGTH_SHORT).show();
+                        }
                         else
                             Toast.makeText(ListActivity.this, query +
                                     " not found", Toast.LENGTH_SHORT).show();
@@ -81,7 +83,7 @@ public class ListActivity extends AppCompatActivity {
                 return false;
             }
         });
-        userUserAdapter.setClickListener(new UserAdapter.ClickListener() {
+        userAdapter.setClickListener(new UserAdapter.ClickListener() {
             @Override
             public void onLongClick(long userId) {
                 preActionDialog(userId);

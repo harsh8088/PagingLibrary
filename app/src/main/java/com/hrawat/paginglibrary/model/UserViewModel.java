@@ -10,7 +10,6 @@ import com.hrawat.paginglibrary.db.dao.UserDao;
 public class UserViewModel extends ViewModel {
 
     public LiveData<PagedList<User>> userList;
-
     public UserViewModel() {
     }
 

@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.util.List;
+
 public class UserAdapter extends PagedListAdapter<User, UserAdapter.UserItemViewHolder> {
 
     UserAdapter() {
@@ -18,6 +20,10 @@ public class UserAdapter extends PagedListAdapter<User, UserAdapter.UserItemView
 
     void setClickListener(ClickListener clickListener) {
         this.clickListener = clickListener;
+    }
+
+    public void filterName(List<User> user) {
+//        setList(user);
     }
 
     interface ClickListener {

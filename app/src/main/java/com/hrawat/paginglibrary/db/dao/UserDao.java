@@ -38,4 +38,7 @@ public interface UserDao {
 
     @Query("SELECT * FROM user WHERE user_id LIKE :userId ")
     User findByUserId(long userId);
+
+    @Query("select * from user WHERE first_name LIKE :first order by first_name DESC")
+    List<User> findUsers(String first);
 }
