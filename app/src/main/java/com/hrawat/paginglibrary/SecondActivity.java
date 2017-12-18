@@ -1,7 +1,6 @@
 package com.hrawat.paginglibrary;
 
 import android.arch.lifecycle.ViewModelProviders;
-import android.arch.persistence.room.Room;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -24,9 +23,7 @@ public class SecondActivity extends AppCompatActivity {
     }
 
     private void init() {
-        appDatabase = Room.databaseBuilder(SecondActivity.this,
-                AppDatabase.class,
-                AppDatabase.DATABASE_NAME).build();
+        appDatabase=MyApplication.getAppDatabase();
         userDao = appDatabase.userDao();
         RecyclerView recyclerView = findViewById(R.id.second_user_list);
         LinearLayoutManager llm = new LinearLayoutManager(this);

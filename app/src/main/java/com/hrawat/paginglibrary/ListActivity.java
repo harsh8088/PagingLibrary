@@ -3,7 +3,6 @@ package com.hrawat.paginglibrary;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.arch.lifecycle.ViewModelProviders;
-import android.arch.persistence.room.Room;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -36,9 +35,8 @@ public class ListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
-        appDatabase = Room.databaseBuilder(ListActivity.this,
-                AppDatabase.class,
-                AppDatabase.DATABASE_NAME).build();
+
+        appDatabase=MyApplication.getAppDatabase();
         userDao = appDatabase.userDao();
         SearchView searchView = (SearchView) findViewById(R.id.searchView);
         RecyclerView recyclerView = findViewById(R.id.userList);
@@ -49,7 +47,7 @@ public class ListActivity extends AppCompatActivity {
         viewModel.init(userDao);
         final UserAdapter userAdapter = new UserAdapter();
         viewModel.userList.observe(this, pagedList -> userAdapter.setList(pagedList));
-        RecyclerView.ItemDecoration dividerItemDecoration = new DividerItemDecoration(this,DividerItemDecoration.VERTICAL);
+        RecyclerView.ItemDecoration dividerItemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
         recyclerView.addItemDecoration(dividerItemDecoration);
         recyclerView.setAdapter(userAdapter);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -59,17 +57,18 @@ public class ListActivity extends AppCompatActivity {
                 new AsyncTask<Void, Void, List<User>>() {
                     @Override
                     protected List<User> doInBackground(Void... voids) {
-                        return appDatabase.userDao().findUsers(query);
+                        List<User> list = appDatabase.userDao().findUsers(query);
+//                        appDatabase.userDao().insertAll(list);
+                        return list;
                     }
 
                     @Override
                     protected void onPostExecute(List<User> user) {
-                        if (user != null && user.size()>0) {
-                            userAdapter.filterName(user);
+                        if (user != null && user.size() > 0) {
+//                            userAdapter.onCurrentListChanged((PagedList<User>) user);
                             Toast.makeText(ListActivity.this, "found name " +
                                     user.get(0).firstName + " " + user.size() + " times", Toast.LENGTH_SHORT).show();
-                        }
-                        else
+                        } else
                             Toast.makeText(ListActivity.this, query +
                                     " not found", Toast.LENGTH_SHORT).show();
                         super.onPostExecute(user);
@@ -78,8 +77,31 @@ public class ListActivity extends AppCompatActivity {
                 return false;
             }
 
+            @SuppressLint("StaticFieldLeak")
             @Override
             public boolean onQueryTextChange(String newText) {
+                if (newText.isEmpty())
+                    new AsyncTask<Void, Void, List<User>>() {
+                        @Override
+                        protected List<User> doInBackground(Void... voids) {
+                            List<User> list = appDatabase.userDao().findAllUsers();
+//                            appDatabase.userDao().insertAll(list);
+                            return list;
+                        }
+
+                        @Override
+                        protected void onPostExecute(List<User> user) {
+                            if (user != null && user.size() > 0) {
+//                            userAdapter.setList(user);
+                                Toast.makeText(ListActivity.this, "found name " +
+                                        user.get(0).firstName + " " + user.size() + " times", Toast.LENGTH_SHORT).show();
+                            }
+//                        else
+//                            Toast.makeText(ListActivity.this, query +
+//                                    " not found", Toast.LENGTH_SHORT).show();
+                            super.onPostExecute(user);
+                        }
+                    }.execute();
                 return false;
             }
         });

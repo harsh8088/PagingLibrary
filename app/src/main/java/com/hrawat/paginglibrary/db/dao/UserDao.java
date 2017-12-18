@@ -16,22 +16,22 @@ import java.util.List;
 public interface UserDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    public void insertAll(List<User> users);
+    void insertAll(List<User> users);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    public void insert(User... user);
+    void insert(User... user);
 
     @Update(onConflict = OnConflictStrategy.REPLACE)
-    public void updateUser(User... user);
+    void updateUser(User... user);
 
     @Delete
-    public void deleteUser(User... user);
+    void deleteUser(User... user);
 
     @Query("DELETE FROM User")
-    public void deleteAllUsers();
+    void deleteAllUsers();
 
     @Query("SELECT * FROM User")
-    public abstract LivePagedListProvider<Integer, User> usersByFirstName();
+    LivePagedListProvider<Integer, User> usersByFirstName();
 
     @Query("SELECT * FROM user WHERE first_name LIKE :first ")
     List<User> findByName(String first);
@@ -41,4 +41,7 @@ public interface UserDao {
 
     @Query("select * from user WHERE first_name LIKE :first order by first_name DESC")
     List<User> findUsers(String first);
+
+    @Query("select * from user")
+    List<User> findAllUsers( );
 }
