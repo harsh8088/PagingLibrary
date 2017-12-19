@@ -1,6 +1,7 @@
 package com.hrawat.paginglibrary;
 
 import android.arch.lifecycle.ViewModelProviders;
+import android.arch.paging.PagedList;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -32,7 +33,7 @@ public class SecondActivity extends AppCompatActivity {
         UserViewModel viewModel = ViewModelProviders.of(this).get(UserViewModel.class);
         viewModel.init(userDao);
         final UserAdapter userUserAdapter = new UserAdapter();
-        viewModel.userList.observe(this, pagedList -> userUserAdapter.setList(pagedList));
+        viewModel.userList.observe(this, pagedList -> userUserAdapter.setList((PagedList<User>) pagedList));
         recyclerView.setAdapter(userUserAdapter);
     }
 }

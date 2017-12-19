@@ -32,6 +32,7 @@ public interface UserDao {
 
     @Query("SELECT * FROM User")
     LivePagedListProvider<Integer, User> usersByFirstName();
+//    DataSource.Factory<Integer, User> usersByFirstName();
 
     @Query("SELECT * FROM user WHERE first_name LIKE :first ")
     List<User> findByName(String first);

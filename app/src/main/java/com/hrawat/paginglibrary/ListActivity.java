@@ -3,6 +3,7 @@ package com.hrawat.paginglibrary;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.arch.lifecycle.ViewModelProviders;
+import android.arch.paging.PagedList;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -46,7 +47,7 @@ public class ListActivity extends AppCompatActivity {
         UserViewModel viewModel = ViewModelProviders.of(this).get(UserViewModel.class);
         viewModel.init(userDao);
         final UserAdapter userAdapter = new UserAdapter();
-        viewModel.userList.observe(this, pagedList -> userAdapter.setList(pagedList));
+        viewModel.userList.observe(this, pagedList -> userAdapter.setList((PagedList<User>) pagedList));
         RecyclerView.ItemDecoration dividerItemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
         recyclerView.addItemDecoration(dividerItemDecoration);
         recyclerView.setAdapter(userAdapter);
