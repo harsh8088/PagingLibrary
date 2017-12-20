@@ -3,12 +3,15 @@ package com.hrawat.paginglibrary.model;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.ViewModel;
 import android.arch.paging.LivePagedListBuilder;
+import android.arch.paging.PagedList;
 
+import com.hrawat.paginglibrary.db.User;
 import com.hrawat.paginglibrary.db.dao.UserDao;
 
 public class UserViewModel extends ViewModel {
 
-    public LiveData userList;
+    public LiveData<PagedList<User>> userList;
+
     public UserViewModel() {
     }
 
@@ -22,5 +25,16 @@ public class UserViewModel extends ViewModel {
 
         userList = new LivePagedListBuilder<>(
                 userDao.usersByFirstName(), /* page size */ 20).build();
+    }
+
+    public void initInfinite(UserDao userDao) {
+//        userList = new LivePagedListBuilder<Integer, User>() {
+//            @Override
+//            protected DataSource<Integer, User> createDataSource() {
+//                tDataSource = new TDataSource();
+//                return tDataSource;
+//            }
+//        };
+        userList= new LivePagedListBuilder(userDao.usersByFirstName(),20).build();
     }
 }

@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import java.util.List;
+import com.hrawat.paginglibrary.db.User;
 
 public class UserAdapter extends PagedListAdapter<User, UserAdapter.UserItemViewHolder> {
 
@@ -20,10 +20,6 @@ public class UserAdapter extends PagedListAdapter<User, UserAdapter.UserItemView
 
     void setClickListener(ClickListener clickListener) {
         this.clickListener = clickListener;
-    }
-
-    public void filterName(List<User> user) {
-//        setList(user);
     }
 
     interface ClickListener {
@@ -55,7 +51,7 @@ public class UserAdapter extends PagedListAdapter<User, UserAdapter.UserItemView
 
     static class UserItemViewHolder extends RecyclerView.ViewHolder {
 
-        TextView userName, userId, userAddress;
+        TextView userName, userId, userAddress, userAge;
         LinearLayout linearLayout;
 
         UserItemViewHolder(View itemView) {
@@ -63,6 +59,7 @@ public class UserAdapter extends PagedListAdapter<User, UserAdapter.UserItemView
             userId = itemView.findViewById(R.id.userId);
             userName = itemView.findViewById(R.id.userName);
             userAddress = itemView.findViewById(R.id.userAddress);
+            userAge = itemView.findViewById(R.id.userAge);
             linearLayout = itemView.findViewById(R.id.item_linear_layout);
         }
 
@@ -70,6 +67,7 @@ public class UserAdapter extends PagedListAdapter<User, UserAdapter.UserItemView
             userName.setText(user.firstName);
             userId.setText(String.valueOf(user.userId));
             userAddress.setText(String.valueOf(user.address));
+            userAge.setText(String.valueOf(user.age));
         }
     }
 }

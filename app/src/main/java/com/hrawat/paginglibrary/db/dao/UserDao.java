@@ -1,6 +1,6 @@
 package com.hrawat.paginglibrary.db.dao;
 
-import android.arch.paging.LivePagedListProvider;
+import android.arch.paging.DataSource;
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
@@ -8,7 +8,7 @@ import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Update;
 
-import com.hrawat.paginglibrary.User;
+import com.hrawat.paginglibrary.db.User;
 
 import java.util.List;
 
@@ -31,8 +31,8 @@ public interface UserDao {
     void deleteAllUsers();
 
     @Query("SELECT * FROM User")
-    LivePagedListProvider<Integer, User> usersByFirstName();
-//    DataSource.Factory<Integer, User> usersByFirstName();
+//    LivePagedListProvider<Integer, User> usersByFirstName();
+    DataSource.Factory<Integer, User> usersByFirstName();
 
     @Query("SELECT * FROM user WHERE first_name LIKE :first ")
     List<User> findByName(String first);
@@ -44,5 +44,12 @@ public interface UserDao {
     List<User> findUsers(String first);
 
     @Query("select * from user")
-    List<User> findAllUsers( );
+    List<User> findAllUsers();
+
+    @Query("select * from user WHERE age > :age order by first_name DESC, user_id ASC")
+    DataSource.Factory<Integer, User> usersOlderThan(int age);
+
+//    @Query("SELECT * FROM User")
+//    LivePagedListProvider<Integer, User> usersByFirstName();
+//    DataSource.Factory<Integer, User> infiniteUsersByFirstName();
 }

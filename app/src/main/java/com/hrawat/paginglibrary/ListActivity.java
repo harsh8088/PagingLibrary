@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import com.hrawat.paginglibrary.db.AppDatabase;
 import com.hrawat.paginglibrary.db.DatabaseCreator;
+import com.hrawat.paginglibrary.db.User;
 import com.hrawat.paginglibrary.db.dao.UserDao;
 import com.hrawat.paginglibrary.model.UserViewModel;
 
@@ -36,8 +37,7 @@ public class ListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
-
-        appDatabase=MyApplication.getAppDatabase();
+        appDatabase = MyApplication.getAppDatabase();
         userDao = appDatabase.userDao();
         SearchView searchView = (SearchView) findViewById(R.id.searchView);
         RecyclerView recyclerView = findViewById(R.id.userList);
@@ -59,7 +59,6 @@ public class ListActivity extends AppCompatActivity {
                     @Override
                     protected List<User> doInBackground(Void... voids) {
                         List<User> list = appDatabase.userDao().findUsers(query);
-//                        appDatabase.userDao().insertAll(list);
                         return list;
                     }
 
@@ -81,31 +80,10 @@ public class ListActivity extends AppCompatActivity {
             @SuppressLint("StaticFieldLeak")
             @Override
             public boolean onQueryTextChange(String newText) {
-                if (newText.isEmpty())
-                    new AsyncTask<Void, Void, List<User>>() {
-                        @Override
-                        protected List<User> doInBackground(Void... voids) {
-                            List<User> list = appDatabase.userDao().findAllUsers();
-//                            appDatabase.userDao().insertAll(list);
-                            return list;
-                        }
-
-                        @Override
-                        protected void onPostExecute(List<User> user) {
-                            if (user != null && user.size() > 0) {
-//                            userAdapter.setList(user);
-                                Toast.makeText(ListActivity.this, "found name " +
-                                        user.get(0).firstName + " " + user.size() + " times", Toast.LENGTH_SHORT).show();
-                            }
-//                        else
-//                            Toast.makeText(ListActivity.this, query +
-//                                    " not found", Toast.LENGTH_SHORT).show();
-                            super.onPostExecute(user);
-                        }
-                    }.execute();
                 return false;
             }
         });
+
         userAdapter.setClickListener(new UserAdapter.ClickListener() {
             @Override
             public void onLongClick(long userId) {
