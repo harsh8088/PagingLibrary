@@ -27,7 +27,7 @@ public class DatabaseCreator {
         int streetRange = street.length;
         String address;
         Random random = new Random();
-        for (int i = 1; i <= 20; i++) {
+        for (int i = 1; i <= 50; i++) {
             address = state[random.nextInt(stateRange)] + "," + city[random.nextInt(cityRange)] + "," +
                     String.valueOf(random.nextInt(99999)) + "," + street[random.nextInt(streetRange)];
             tempUser = new User();

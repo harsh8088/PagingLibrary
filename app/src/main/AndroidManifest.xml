@@ -18,7 +18,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".SecondActivity"
+            android:name=".InfiniteListActivity"
             android:label="Second List">
         </activity>
     </application>

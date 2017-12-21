@@ -165,7 +165,7 @@ public class ListActivity extends AppCompatActivity {
                 deleteAllUsers();
                 break;
             case R.id.action_second_list:
-                Intent intent = new Intent(ListActivity.this, SecondActivity.class);
+                Intent intent = new Intent(ListActivity.this, InfiniteListActivity.class);
                 startActivity(intent);
                 break;
         }

@@ -46,10 +46,8 @@ public interface UserDao {
     @Query("select * from user")
     List<User> findAllUsers();
 
-    @Query("select * from user WHERE age > :age order by first_name DESC, user_id ASC")
+    @Query("select * from user WHERE age > :age order by user_id ASC")
     DataSource.Factory<Integer, User> usersOlderThan(int age);
 
-//    @Query("SELECT * FROM User")
-//    LivePagedListProvider<Integer, User> usersByFirstName();
-//    DataSource.Factory<Integer, User> infiniteUsersByFirstName();
+
 }

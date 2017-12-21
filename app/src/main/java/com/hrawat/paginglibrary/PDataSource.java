@@ -37,6 +37,7 @@ public class PDataSource extends PositionalDataSource<User> {
             Response<List<User>> response = gitHubService.getUser(startPosition, loadCount).execute();
             if (response.isSuccessful() && response.code() == 200) {
                 gitHubUser.addAll(response.body());
+
             } else {
                 Log.e("API CALL", response.message());
             }

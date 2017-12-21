@@ -22,7 +22,6 @@ public class UserViewModel extends ViewModel {
 //                        .setPageSize(10)
 //                        .setPrefetchDistance(5)
 //                        .build());
-
         userList = new LivePagedListBuilder<>(
                 userDao.usersByFirstName(), /* page size */ 20).build();
     }
@@ -35,6 +34,10 @@ public class UserViewModel extends ViewModel {
 //                return tDataSource;
 //            }
 //        };
-        userList= new LivePagedListBuilder(userDao.usersByFirstName(),20).build();
+        userList = new LivePagedListBuilder(userDao.usersOlderThan(25),new PagedList.Config.Builder()
+                .setEnablePlaceholders(false)
+                .setPageSize(20)
+                .setInitialLoadSizeHint(20)
+                .build()).build();
     }
 }

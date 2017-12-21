@@ -1,6 +1,10 @@
 package com.hrawat.paginglibrary;
 
 import android.arch.paging.PagedListAdapter;
+import android.os.Build;
+import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
+import android.support.v7.recyclerview.extensions.DiffCallback;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,7 +17,7 @@ import com.hrawat.paginglibrary.db.User;
 public class UserAdapter extends PagedListAdapter<User, UserAdapter.UserItemViewHolder> {
 
     UserAdapter() {
-        super(User.DIFF_CALLBACK);
+        super(DIFF_CALLBACK);
     }
 
     private ClickListener clickListener;
@@ -42,12 +46,26 @@ public class UserAdapter extends PagedListAdapter<User, UserAdapter.UserItemView
             holder.linearLayout.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
-                    clickListener.onLongClick(user.userId);
+                    if (clickListener != null)
+                        clickListener.onLongClick(user.userId);
                     return false;
                 }
             });
         }
     }
+
+    private static DiffCallback<User> DIFF_CALLBACK = new DiffCallback<User>() {
+        @Override
+        public boolean areItemsTheSame(@NonNull User oldItem, @NonNull User newItem) {
+            return oldItem.userId == newItem.userId;
+        }
+
+        @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+        @Override
+        public boolean areContentsTheSame(@NonNull User oldItem, @NonNull User newItem) {
+            return oldItem.equals(newItem);
+        }
+    };
 
     static class UserItemViewHolder extends RecyclerView.ViewHolder {
 
