@@ -25,19 +25,4 @@ public class UserViewModel extends ViewModel {
         userList = new LivePagedListBuilder<>(
                 userDao.usersByFirstName(), /* page size */ 20).build();
     }
-
-    public void initInfinite(UserDao userDao) {
-//        userList = new LivePagedListBuilder<Integer, User>() {
-//            @Override
-//            protected DataSource<Integer, User> createDataSource() {
-//                tDataSource = new TDataSource();
-//                return tDataSource;
-//            }
-//        };
-        userList = new LivePagedListBuilder(userDao.usersOlderThan(25),new PagedList.Config.Builder()
-                .setEnablePlaceholders(false)
-                .setPageSize(20)
-                .setInitialLoadSizeHint(20)
-                .build()).build();
-    }
 }

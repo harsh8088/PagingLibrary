@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.arch.lifecycle.ViewModelProviders;
 import android.arch.paging.PagedList;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -83,7 +82,6 @@ public class ListActivity extends AppCompatActivity {
                 return false;
             }
         });
-
         userAdapter.setClickListener(new UserAdapter.ClickListener() {
             @Override
             public void onLongClick(long userId) {
@@ -165,8 +163,9 @@ public class ListActivity extends AppCompatActivity {
                 deleteAllUsers();
                 break;
             case R.id.action_second_list:
-                Intent intent = new Intent(ListActivity.this, InfiniteListActivity.class);
-                startActivity(intent);
+//                Intent intent = new Intent(ListActivity.this, RedditActivity.class);
+//                intent.putExtra("repository_type", RedditPostRepository.Type.IN_MEMORY_BY_ITEM);
+//                startActivity(intent);
                 break;
         }
         return true;

@@ -17,9 +17,6 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity
-            android:name=".InfiniteListActivity"
-            android:label="Second List">
-        </activity>
+        <activity android:name=".activityloading.RedditActivity"/>
     </application>
 </manifest>
