@@ -3,7 +3,6 @@ package com.hrawat.paginglibrary;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.arch.lifecycle.ViewModelProviders;
-import android.arch.paging.PagedList;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -38,16 +37,21 @@ public class ListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_list);
         appDatabase = MyApplication.getAppDatabase();
         userDao = appDatabase.userDao();
-        SearchView searchView = (SearchView) findViewById(R.id.searchView);
-        RecyclerView recyclerView = findViewById(R.id.userList);
+        initView();
+    }
+
+    private void initView() {
+        SearchView searchView = (SearchView) findViewById(R.id.search_view);
+        RecyclerView recyclerView = findViewById(R.id.rv_user_list);
         LinearLayoutManager llm = new LinearLayoutManager(this);
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(llm);
         UserViewModel viewModel = ViewModelProviders.of(this).get(UserViewModel.class);
         viewModel.init(userDao);
         final UserAdapter userAdapter = new UserAdapter();
-        viewModel.userList.observe(this, pagedList -> userAdapter.setList((PagedList<User>) pagedList));
-        RecyclerView.ItemDecoration dividerItemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
+        viewModel.userList.observe(this, userAdapter::setList);
+        RecyclerView.ItemDecoration dividerItemDecoration = new DividerItemDecoration(this,
+                DividerItemDecoration.VERTICAL);
         recyclerView.addItemDecoration(dividerItemDecoration);
         recyclerView.setAdapter(userAdapter);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {

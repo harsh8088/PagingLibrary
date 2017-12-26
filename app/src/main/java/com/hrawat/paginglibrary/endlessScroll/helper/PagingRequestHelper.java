@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.hrawat.paginglibrary.activityloading.helper;
+package com.hrawat.paginglibrary.endlessScroll.helper;
 
 import android.arch.paging.DataSource;
 import android.support.annotation.AnyThread;
