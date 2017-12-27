@@ -3,7 +3,7 @@ package com.hrawat.paginglibrary;
 import android.app.Application;
 import android.arch.persistence.room.Room;
 
-import com.hrawat.paginglibrary.db.AppDatabase;
+import com.hrawat.paginglibrary.listactivity.db.AppDatabase;
 
 /**
  * Created by hrawat on 12/18/2017.

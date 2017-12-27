@@ -4,7 +4,7 @@ import android.arch.paging.PositionalDataSource;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
-import com.hrawat.paginglibrary.db.User;
+import com.hrawat.paginglibrary.listactivity.db.User;
 import com.hrawat.paginglibrary.network.GitHubApi;
 import com.hrawat.paginglibrary.network.GitHubService;
 
